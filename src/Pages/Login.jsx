@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 
 const Login = () => {
     return (
@@ -79,8 +80,7 @@ const Login = () => {
   
         <div className="flex items-center justify-between">
           <p className="text-sm text-gray-500">
-            No account?
-            <a href="register" up-follow up-transition="move-left"className="underline">Sign up</a>
+            No account ? <NavLink to="/register" up-follow up-transition="move-left"className="underline">Sign up</NavLink>
           </p>
           <button type="submit" className="group relative inline-flex items-center overflow-hidden rounded bg-blue-500 px-8 py-3 text-white focus:outline-none focus:ring active:bg-blue-300">
 
