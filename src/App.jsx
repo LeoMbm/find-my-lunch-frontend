@@ -31,7 +31,7 @@ function App() {
   const [Longitude, setLongitude] = useState(4.34878);
   const [Status, setStatus] = useState(null);
   const [Resto, setResto] = useState(null);
- 
+ // TODO: Add GeoAPI in backend for retrieve list of restaurant
 
   function LocationMarker() {
     const [position, setPosition] = useState(null);

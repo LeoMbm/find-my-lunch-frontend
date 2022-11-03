@@ -13,17 +13,17 @@ const Register = () => {
     first_name: Yup.string()
         .min(3, "Too short")
         .max(50, "Too long")
-        .required("First name is reauired"),
+        .required("First name is required"),
     last_name: Yup.string()
         .min(2, "Too short")
         .max(10, "Too long")
-        .required("Last name is reauired"),
+        .required("Last name is required"),
     email: Yup.string()
         .email("Invalid Email")
         .required("Email is required"),
     password: Yup.string()
         .required("Password is required")
-        .min(8, "Your password must be at least 8 characters long")
+        .min(8, "Your password must be at least 8 characters long, one letter and one number")
         .max(50, "Your password is too long"),
         passwordConfirmation: Yup.string()
         .required("Password confirmation is required")
