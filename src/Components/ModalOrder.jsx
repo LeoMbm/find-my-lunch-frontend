@@ -1,6 +1,20 @@
-import React from "react";
+import React, {useEffect, useState}from "react";
+import axios  from 'axios';
+
 
 const ModalOrder = ({ CloseModal , isClicked}) => {
+  const [Meal, setMeal] = useState(null)
+  const [Extra, setExtra] = useState(null)
+
+
+useEffect(() => {
+  const baseURL = 'https://www.themealdb.com/api/json/v1/1/random.php'
+  axios.get(baseURL).then((response) => {
+    const data = response.data.meals[0]
+    setMeal(data.strMeal)
+    setExtra(data.strIngredient1)
+  });
+}, []);
 
   console.log(isClicked);
   return (
@@ -86,13 +100,13 @@ const ModalOrder = ({ CloseModal , isClicked}) => {
 
                                       <div className="ml-4">
                                         <p className="text-sm">
-                                          Pasta Carbonara
+                                          {Meal}
                                         </p>
 
                                         <dl className="mt-1 space-y-1 text-xs text-gray-500">
                                           <div>
                                             <dt className="inline">Extra:</dt>
-                                            <dd className="inline">Cheese</dd>
+                                            <dd className="inline">{Extra}</dd>
                                           </div>
 
                                           <div>

@@ -1,15 +1,48 @@
 import { Avatar, Dropdown } from "flowbite-react";
-import React from "react";
+import React, {useEffect} from "react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
+import axios from 'axios'
 
-const Header = ({ Logged }) => {
+axios.defaults.baseURL='http://localhost:3333';
+
+// TODO: Get User info but at this moment when i tried i'm getting 401 unauthorized access - put this in app.js as props
+
+const Header = ({ Logged, setLogged, User }) => {
   const [isActive, setIsActive] = useState(false);
+  const navigate = useNavigate();
   const changeStyle = () => {
     console.log("you just clicked");
 
     setIsActive((isActive) => !isActive);
   };
+
+
+  const handleSubmit = async (values) => {
+    const response = await axios.get("/auth/logout",{ skipAuthRefresh: true })
+     .catch((err)=>{
+     console.log(err);
+     });
+  
+  
+     if(response){
+      console.log(response);
+      setLogged(false)
+     navigate("/");
+     }
+  };
+
+
+  useEffect(() => {
+    if(Logged){
+      const baseURL = 'http://localhost:3333/user';
+      axios.get(baseURL).then((response) => {
+        console.log(response.data.message);
+      })
+      .catch((error)=> console.log(error));
+    }
+
+  }, []);
 
   console.log(Logged);
   return (
@@ -50,7 +83,7 @@ const Header = ({ Logged }) => {
                   <Dropdown.Item>Settings</Dropdown.Item>
                   <Dropdown.Item>Earnings</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item>Sign out</Dropdown.Item>
+                  <button className="w-full h-full" onClick={handleSubmit}><Dropdown.Item>Sign out</Dropdown.Item></button>
                 </Dropdown>
               )}
               {!Logged && (

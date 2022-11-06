@@ -23,9 +23,9 @@ import {
 import axios from "axios";
 
 
-const apiKeyGeo = "284a2a00975a44d3898454f392083147"
 
 function App() {
+  // TODO: Stylize btn logout
   const [Logged, setLogged] = useState(false)
   const [Latitude, setLatitude] = useState(50.85045);
   const [Longitude, setLongitude] = useState(4.34878);
@@ -55,25 +55,30 @@ function App() {
     );
   }
 
+
   useEffect(() => {
-    const baseURL = `https://api.geoapify.com/v2/places?categories=catering.restaurant,catering.fast_food&filter=circle:${Longitude},${Latitude},5000&bias=proximity:${Longitude},${Latitude}&limit=100&apiKey=${apiKeyGeo}`;
+    const baseURL = `http://localhost:3333/restaurants/${Latitude}/${Longitude}`;
     axios.get(baseURL).then((response) => {
       setResto(response.data.features);
     });
   }, [Longitude, Latitude]);
   if (!Resto) return null;
 
+
+
+
+
   return (
     <div className="App flex flex-col min-h-screen justify-between">
       <BrowserRouter>
-      <Header Logged={Logged}/>
+      <Header Logged={Logged} setLogged={setLogged}/>
       <Routes>
-        <Route path="/" element={<Home Resto={Resto} LocationMarker={LocationMarker} Longitude={Longitude} Latitude={Latitude}/>} />
+        <Route path="/" element={<Home Resto={Resto} Logged={Logged} LocationMarker={LocationMarker} Longitude={Longitude} Latitude={Latitude}/>} />
         <Route path="/restaurants" element={<Restaurants />} />
         <Route path="/maps" element={<Maps />} />
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setLogged={setLogged} />} />
       </Routes>
       <FooterComp/>
     </BrowserRouter>
