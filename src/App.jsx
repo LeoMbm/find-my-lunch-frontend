@@ -14,6 +14,7 @@ import Register from './Pages/Register';
 import Login from './Pages/Login';
 import './Styles/MapComp.css'
 import { useState, useEffect } from 'react';
+import Cookie  from 'universal-cookie';
 import {
   Marker,
   Popup,
@@ -26,11 +27,19 @@ import axios from "axios";
 
 function App() {
   // TODO: Stylize btn logout
-  const [Logged, setLogged] = useState(false)
+
   const [Latitude, setLatitude] = useState(50.85045);
   const [Longitude, setLongitude] = useState(4.34878);
   const [Status, setStatus] = useState(null);
   const [Resto, setResto] = useState(null);
+  const cookie = new Cookie()
+  const sessionCookie = cookie.get('adonis-session')
+  const [Logged, setLogged] = useState(()=>{
+    if(sessionCookie){
+      return true
+    }
+    return false
+  })
  // TODO: Add GeoAPI in backend for retrieve list of restaurant
 
   function LocationMarker() {
@@ -65,7 +74,7 @@ function App() {
   if (!Resto) return null;
 
 
-
+console.log(sessionCookie);
 
 
   return (

@@ -5,11 +5,14 @@ import { NavLink,useNavigate } from "react-router-dom";
 import axios from 'axios'
 
 axios.defaults.baseURL='http://localhost:3333';
+axios.defaults.withCredentials = true
 
 // TODO: Get User info but at this moment when i tried i'm getting 401 unauthorized access - put this in app.js as props
 
-const Header = ({ Logged, setLogged, User }) => {
+const Header = ({ Logged, setLogged }) => {
   const [isActive, setIsActive] = useState(false);
+  const [User, setUser] = useState([])
+  const [Name, setName] = useState(null)
   const navigate = useNavigate();
   const changeStyle = () => {
     console.log("you just clicked");
@@ -37,14 +40,14 @@ const Header = ({ Logged, setLogged, User }) => {
     if(Logged){
       const baseURL = 'http://localhost:3333/user';
       axios.get(baseURL).then((response) => {
+        setUser([response.data.message]);
         console.log(response.data.message);
       })
       .catch((error)=> console.log(error));
     }
 
-  }, []);
-
-  console.log(Logged);
+  }, [Logged]);
+  console.log(User)
   return (
     <div className="flex flex-col">
       <header>
@@ -74,10 +77,10 @@ const Header = ({ Logged, setLogged, User }) => {
                   }
                 >
                   <Dropdown.Header>
-                    <span className="block text-sm">Bonnie Green</span>
-                    <span className="block truncate text-sm font-medium">
-                      name@flowbite.com
-                    </span>
+                   {User.map(x => { <><span className="block text-sm"> {x.first_name}</span>
+                    <span className="block truncate text-sm font-medium"> {x.email} </span></>})}
+                   
+                    
                   </Dropdown.Header>
                   <Dropdown.Item>Dashboard</Dropdown.Item>
                   <Dropdown.Item>Settings</Dropdown.Item>

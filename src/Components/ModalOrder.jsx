@@ -1,6 +1,8 @@
 import React, {useEffect, useState}from "react";
 import axios  from 'axios';
 
+axios.defaults.baseURL='http://localhost:3333';
+axios.defaults.withCredentials = true
 
 const ModalOrder = ({ CloseModal , isClicked}) => {
   const [Meal, setMeal] = useState(null)
@@ -8,7 +10,7 @@ const ModalOrder = ({ CloseModal , isClicked}) => {
 
 
 useEffect(() => {
-  const baseURL = 'https://www.themealdb.com/api/json/v1/1/random.php'
+  const baseURL = '/meals'
   axios.get(baseURL).then((response) => {
     const data = response.data.meals[0]
     setMeal(data.strMeal)

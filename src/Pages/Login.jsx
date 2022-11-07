@@ -6,6 +6,7 @@ import axios from 'axios'
 import Alert from '@mui/material/Alert';
 
 axios.defaults.baseURL='http://localhost:3333';
+axios.defaults.withCredentials = true
 // TODO: Set Cookie for login. On refresh my login is expired.
 const Login = ({setLogged}) => {
   const [Success, setSuccess] = useState(null)
