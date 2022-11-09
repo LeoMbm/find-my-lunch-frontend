@@ -4,11 +4,13 @@ import {Formik, Field, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios'
 import Alert from '@mui/material/Alert';
+import Cookie  from 'universal-cookie';
 
-axios.defaults.baseURL='http://localhost:3333';
-axios.defaults.withCredentials = true
+// axios.defaults.baseURL='http://localhost:3333';
+// axios.defaults.withCredentials = true
 // TODO: Set Cookie for login. On refresh my login is expired.
 const Login = ({setLogged}) => {
+  const cookies = new Cookie()
   const [Success, setSuccess] = useState(null)
   const [Error, setError] = useState(null)
   const navigate = useNavigate();
@@ -28,18 +30,25 @@ const initialValues = {
 };
 
 const handleSubmit = async (values) => {
-  const response = await axios.post("/auth/login",values,{ skipAuthRefresh: true })
+  await axios.post("/auth/login",values)
+  .then((response) => {
+    console.log(response);
+    sessionStorage.setItem("JWT", response.data.token.token)
+    console.log(cookies.getAll());
+    setLogged(true)
+    navigate("/");
+  })
    .catch((err)=>{
    console.log(err.response.data.message);
    setError(err.response.data.message)
    });
 
 
-   if(response){
-    console.log(response);
-    setLogged(true)
-   navigate("/");
-   }
+  //  if(response){
+  //   console.log(response);
+  //   setLogged(true)
+  //  navigate("/");
+  //  }
 };
 
     return (
@@ -65,7 +74,7 @@ const handleSubmit = async (values) => {
                                
                                 <div className="relative">
                                     <label htmlFor="email"  className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                        Email:
+                                        Email: leonsis.j.mbm@gmail.com
                                     </label>
                                     <Field
                                         type="email"
@@ -81,7 +90,7 @@ const handleSubmit = async (values) => {
                                 </div>
                                 <div className="relative">
                                     <label htmlFor="password"  className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                        Password:
+                                        Password: HelLo123sdsafas
                                     </label>
                                     <Field
                                         type="password"

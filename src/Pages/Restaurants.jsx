@@ -2,8 +2,6 @@ import axios from 'axios';
 import React from 'react';
 import {useEffect, useState} from 'react';
 
-axios.defaults.baseURL='http://localhost:3333';
-axios.defaults.withCredentials = true
 
 const Restaurants = () => {
     const [Resto, setResto] = useState(null)

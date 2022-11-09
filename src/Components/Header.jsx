@@ -3,15 +3,16 @@ import React, {useEffect} from "react";
 import { useState } from "react";
 import { NavLink,useNavigate } from "react-router-dom";
 import axios from 'axios'
+import Cookie  from 'universal-cookie';
 
-axios.defaults.baseURL='http://localhost:3333';
-axios.defaults.withCredentials = true
+
 
 // TODO: Get User info but at this moment when i tried i'm getting 401 unauthorized access - put this in app.js as props
 
 const Header = ({ Logged, setLogged }) => {
+  const cookies = new Cookie()
   const [isActive, setIsActive] = useState(false);
-  const [User, setUser] = useState([])
+  const [User, setUser] = useState({})
   const [Name, setName] = useState(null)
   const navigate = useNavigate();
   const changeStyle = () => {
@@ -22,7 +23,7 @@ const Header = ({ Logged, setLogged }) => {
 
 
   const handleSubmit = async (values) => {
-    const response = await axios.get("/auth/logout",{ skipAuthRefresh: true })
+    const response = await axios.post("/auth/logout")
      .catch((err)=>{
      console.log(err);
      });
@@ -30,6 +31,7 @@ const Header = ({ Logged, setLogged }) => {
   
      if(response){
       console.log(response);
+      sessionStorage.removeItem("JWT")
       setLogged(false)
      navigate("/");
      }
@@ -38,9 +40,9 @@ const Header = ({ Logged, setLogged }) => {
 
   useEffect(() => {
     if(Logged){
-      const baseURL = 'http://localhost:3333/user';
-      axios.get(baseURL).then((response) => {
-        setUser([response.data.message]);
+      axios.get('/user', {headers:{'Authorization': `Bearer ${sessionStorage.getItem('JWT')}`}})
+      .then((response) => {
+        setUser(response.data.message);
         console.log(response.data.message);
       })
       .catch((error)=> console.log(error));
@@ -77,8 +79,8 @@ const Header = ({ Logged, setLogged }) => {
                   }
                 >
                   <Dropdown.Header>
-                   {User.map(x => { <><span className="block text-sm"> {x.first_name}</span>
-                    <span className="block truncate text-sm font-medium"> {x.email} </span></>})}
+                  <span className="block text-sm"> {User.first_name} {User.last_name}</span>
+                    <span className="block truncate text-sm font-medium"> {User.email} </span>
                    
                     
                   </Dropdown.Header>

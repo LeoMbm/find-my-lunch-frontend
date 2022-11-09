@@ -32,10 +32,12 @@ function App() {
   const [Longitude, setLongitude] = useState(4.34878);
   const [Status, setStatus] = useState(null);
   const [Resto, setResto] = useState(null);
+  // TODO: Set cookie in session storage
   const cookie = new Cookie()
-  const sessionCookie = cookie.get('adonis-session')
+  const authToken = sessionStorage.getItem('JWT')
   const [Logged, setLogged] = useState(()=>{
-    if(sessionCookie){
+    if(authToken){
+      console.log(authToken);
       return true
     }
     return false
@@ -74,7 +76,7 @@ function App() {
   if (!Resto) return null;
 
 
-console.log(sessionCookie);
+console.log(authToken);
 
 
   return (

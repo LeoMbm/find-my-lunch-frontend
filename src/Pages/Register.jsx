@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3333";
-axios.defaults.withCredentials = true
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ const Register = () => {
 
   const handleSubmit = async (values) => {
     const response = await axios
-      .post("/auth/register/", values, { skipAuthRefresh: true })
+      .post("/auth/register/", values)
       .catch((err) => {
         console.log(err);
       });
