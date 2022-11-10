@@ -1,55 +1,46 @@
 import { Avatar, Dropdown } from "flowbite-react";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { NavLink,useNavigate } from "react-router-dom";
-import axios from 'axios'
-import Cookie  from 'universal-cookie';
-
-
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookie from "universal-cookie";
 
 // TODO: Get User info but at this moment when i tried i'm getting 401 unauthorized access - put this in app.js as props
-
+axios.defaults.baseURL = "http://localhost:3333";
+axios.defaults.withCredentials = true;
 const Header = ({ Logged, setLogged }) => {
-  const cookies = new Cookie()
   const [isActive, setIsActive] = useState(false);
-  const [User, setUser] = useState({})
-  const [Name, setName] = useState(null)
+  const [User, setUser] = useState({});
+  const [Name, setName] = useState(null);
   const navigate = useNavigate();
   const changeStyle = () => {
-    console.log("you just clicked");
-
     setIsActive((isActive) => !isActive);
   };
 
-
   const handleSubmit = async (values) => {
-    const response = await axios.post("/auth/logout")
-     .catch((err)=>{
-     console.log(err);
-     });
-  
-  
-     if(response){
-      console.log(response);
-      sessionStorage.removeItem("JWT")
-      setLogged(false)
-     navigate("/");
-     }
+    const response = await axios.post("/auth/logout").catch((err) => {
+      console.log(err);
+    });
+
+    if (response) {
+      sessionStorage.removeItem("JWT");
+      setLogged(false);
+      navigate("/");
+    }
   };
 
-
   useEffect(() => {
-    if(Logged){
-      axios.get('/user', {headers:{'Authorization': `Bearer ${sessionStorage.getItem('JWT')}`}})
-      .then((response) => {
-        setUser(response.data.message);
-        console.log(response.data.message);
-      })
-      .catch((error)=> console.log(error));
+    if (Logged) {
+      axios
+        .get("/user", {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("JWT")}` },
+        })
+        .then((response) => {
+          setUser(response.data.message);
+        })
+        .catch((error) => console.log(error));
     }
-
   }, [Logged]);
-  console.log(User)
   return (
     <div className="flex flex-col">
       <header>
@@ -66,32 +57,38 @@ const Header = ({ Logged, setLogged }) => {
               </span>
             </NavLink>
             <div className="flex items-center md:order-2">
-              {Logged && (
+              {Logged ? (
                 <Dropdown
                   arrowIcon={false}
                   inline={true}
-                  label={
-                    <Avatar
-                      alt="User settings"
-                      img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                      rounded={true}
-                    />
-                  }
+                  label={<Avatar alt="User settings" rounded={true} />}
                 >
                   <Dropdown.Header>
-                  <span className="block text-sm"> {User.first_name} {User.last_name}</span>
-                    <span className="block truncate text-sm font-medium"> {User.email} </span>
-                   
-                    
+                    <span className="block text-sm">
+                      {" "}
+                      {User.first_name} {User.last_name}
+                    </span>
+                    <span className="block truncate text-sm font-medium">
+                      {" "}
+                      {User.email}{" "}
+                    </span>
                   </Dropdown.Header>
-                  <Dropdown.Item>Dashboard</Dropdown.Item>
-                  <Dropdown.Item>Settings</Dropdown.Item>
-                  <Dropdown.Item>Earnings</Dropdown.Item>
+                    <NavLink to="/orders">
+                  <Dropdown.Item>
+                      Orders History
+                  </Dropdown.Item>
+                    </NavLink>
+                    <NavLink to="/settings">
+                  <Dropdown.Item>
+                      Settings
+                  </Dropdown.Item>
+                    </NavLink>
                   <Dropdown.Divider />
-                  <button className="w-full h-full" onClick={handleSubmit}><Dropdown.Item>Sign out</Dropdown.Item></button>
+                  <button className="w-full h-full" onClick={handleSubmit}>
+                    <Dropdown.Item>Sign out</Dropdown.Item>
+                  </button>
                 </Dropdown>
-              )}
-              {!Logged && (
+              ) : (
                 <>
                   <NavLink
                     to="/register"

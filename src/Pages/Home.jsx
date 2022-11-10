@@ -8,8 +8,8 @@ import {
 } from "@geoapify/react-geocoder-autocomplete";
 import "@geoapify/geocoder-autocomplete/styles/minimal.css";
 
-
 import ModalOrder from "../Components/ModalOrder";
+
 
 const Home = ({ Resto, LocationMarker, Latitude, Longitude, Logged }) => {
   const [OpenModal, setOpenModal] = useState(false);
@@ -31,13 +31,18 @@ const Home = ({ Resto, LocationMarker, Latitude, Longitude, Logged }) => {
   };
 
   function onPlaceSelect(value) {
-    console.log(value);
+   
     setValue(value)
+
+     console.log(Value);
   }
  
   function onSuggectionChange(value) {
-    console.log(value);
+    setValue(value)
+    console.log(Value);
   }
+
+  
  console.log(Value);
   return (
     <div className="container-fluid flex">
@@ -119,7 +124,6 @@ const Home = ({ Resto, LocationMarker, Latitude, Longitude, Logged }) => {
                   placeSelect={onPlaceSelect}
                   biasByProximity={[Latitude, Longitude]}
                   suggestionsChange={onSuggectionChange}
-                  onChange={(e)=> console.log(e.target.value)}
                 />
               </GeoapifyContext>
             </div>
@@ -205,6 +209,7 @@ const Home = ({ Resto, LocationMarker, Latitude, Longitude, Logged }) => {
                 }
                 {!Logged &&
                 <Tooltip title="You need to login for order food" arrow>
+                  <span>
                 <button
                  disabled
                   className="text-white bg-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-gray-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -220,6 +225,7 @@ const Home = ({ Resto, LocationMarker, Latitude, Longitude, Logged }) => {
                   </svg>
                   Buy now
                 </button>
+                </span>
                 </Tooltip>
                 }
               </div>

@@ -6,9 +6,9 @@ import axios from 'axios'
 import Alert from '@mui/material/Alert';
 import Cookie  from 'universal-cookie';
 
-// axios.defaults.baseURL='http://localhost:3333';
-// axios.defaults.withCredentials = true
-// TODO: Set Cookie for login. On refresh my login is expired.
+axios.defaults.baseURL='http://localhost:3333';
+axios.defaults.withCredentials = true
+axios.defaults.headers.common = `Bearer ${sessionStorage.getItem('JWT')}`;
 const Login = ({setLogged}) => {
   const cookies = new Cookie()
   const [Success, setSuccess] = useState(null)
@@ -32,9 +32,7 @@ const initialValues = {
 const handleSubmit = async (values) => {
   await axios.post("/auth/login",values)
   .then((response) => {
-    console.log(response);
     sessionStorage.setItem("JWT", response.data.token.token)
-    console.log(cookies.getAll());
     setLogged(true)
     navigate("/");
   })

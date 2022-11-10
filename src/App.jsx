@@ -22,6 +22,8 @@ import {
 } from "react-leaflet";
 
 import axios from "axios";
+import UserSettings from './Pages/UserSettings';
+import OrderHistory from './Pages/OrderHistory';
 
 
 
@@ -37,7 +39,7 @@ function App() {
   const authToken = sessionStorage.getItem('JWT')
   const [Logged, setLogged] = useState(()=>{
     if(authToken){
-      console.log(authToken);
+
       return true
     }
     return false
@@ -55,7 +57,7 @@ function App() {
         setLatitude(position.lat);
         setLongitude(position.lng);
         map.flyTo(e.latlng, map.getZoom());
-        console.log(position);
+
       },
     });
 
@@ -76,8 +78,6 @@ function App() {
   if (!Resto) return null;
 
 
-console.log(authToken);
-
 
   return (
     <div className="App flex flex-col min-h-screen justify-between">
@@ -90,6 +90,8 @@ console.log(authToken);
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login setLogged={setLogged} />} />
+        <Route path="/settings" element={<UserSettings setLogged={setLogged}/>} />
+        <Route path="/orders" element={<OrderHistory />} />
       </Routes>
       <FooterComp/>
     </BrowserRouter>

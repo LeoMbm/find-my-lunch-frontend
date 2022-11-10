@@ -10,7 +10,7 @@ const ModalOrder = ({ CloseModal , isClicked}) => {
 
 
 useEffect(() => {
-  const baseURL = '/meals'
+  const baseURL = '/meal'
   axios.get(baseURL).then((response) => {
     const data = response.data.meals[0]
     setMeal(data.strMeal)

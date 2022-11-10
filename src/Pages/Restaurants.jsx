@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React from 'react';
 import {useEffect, useState} from 'react';
-
+axios.defaults.baseURL='http://localhost:3333';
+axios.defaults.withCredentials = true
+axios.defaults.headers.common = `Bearer ${sessionStorage.getItem('JWT')}`;
 
 const Restaurants = () => {
     const [Resto, setResto] = useState(null)
@@ -10,7 +12,6 @@ const Restaurants = () => {
     useEffect(() => {
       axios.get(`/restaurants/${latitude}/${longitude}`)
       .then((response)=>{
-        console.log(response.data.features[0]);
         setResto(response.data.features)
       })}, [latitude, longitude])
       if(!Resto) return null;
