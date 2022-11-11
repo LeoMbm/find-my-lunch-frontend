@@ -4,6 +4,19 @@ This is my real first React's project.
 
 I decided to use React to be able to benefit from the dynamic side that this library offers and also learn along the way.
 
+## TODO
+    - About questions
+    - Set active state for nav link and side bar settings
+    - handle form for checkout
+    - order history page
+        - get all order by user
+        - sort and filter
+        - see details
+    - billing page
+        - can see card details, fake details
+        - can delete card
+    - user settings page
+        - user can modifi his details
 
 
 ## User Story

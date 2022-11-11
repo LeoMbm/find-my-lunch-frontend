@@ -9,6 +9,7 @@ import Cookie from "universal-cookie";
 axios.defaults.baseURL = "http://localhost:3333";
 axios.defaults.withCredentials = true;
 const Header = ({ Logged, setLogged }) => {
+
   const [isActive, setIsActive] = useState(false);
   const [User, setUser] = useState({});
   const [Name, setName] = useState(null);
@@ -160,7 +161,7 @@ const Header = ({ Logged, setLogged }) => {
                     Home
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink
                     onClick={changeStyle}
                     to="/restaurants"
@@ -177,7 +178,7 @@ const Header = ({ Logged, setLogged }) => {
                   >
                     Maps
                   </NavLink>
-                </li>
+                </li> */}
                 <li>
                   <NavLink
                     onClick={changeStyle}

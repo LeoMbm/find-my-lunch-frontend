@@ -24,6 +24,8 @@ import {
 import axios from "axios";
 import UserSettings from './Pages/UserSettings';
 import OrderHistory from './Pages/OrderHistory';
+import Billing from './Pages/Billing';
+import Account from './Pages/Account';
 
 
 
@@ -69,6 +71,10 @@ function App() {
   }
 
 
+
+
+
+
   useEffect(() => {
     const baseURL = `http://localhost:3333/restaurants/${Latitude}/${Longitude}`;
     axios.get(baseURL).then((response) => {
@@ -79,19 +85,25 @@ function App() {
 
 
 
+
+
+// console.log(Resto);
+
   return (
     <div className="App flex flex-col min-h-screen justify-between">
       <BrowserRouter>
       <Header Logged={Logged} setLogged={setLogged}/>
       <Routes>
         <Route path="/" element={<Home Resto={Resto} Logged={Logged} LocationMarker={LocationMarker} Longitude={Longitude} Latitude={Latitude}/>} />
-        <Route path="/restaurants" element={<Restaurants />} />
-        <Route path="/maps" element={<Maps />} />
+        {/* <Route path="/restaurants" element={<Restaurants />} />
+        <Route path="/maps" element={<Maps />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login setLogged={setLogged} />} />
         <Route path="/settings" element={<UserSettings setLogged={setLogged}/>} />
-        <Route path="/orders" element={<OrderHistory />} />
+        <Route path="/orders" element={<OrderHistory setLogged={setLogged}/>} />
+        <Route path="/billing" element={<Billing setLogged={setLogged}/>} />
+        <Route path="/account" element={<Account setLogged={setLogged}/>} />
       </Routes>
       <FooterComp/>
     </BrowserRouter>
