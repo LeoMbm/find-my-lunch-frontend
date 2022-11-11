@@ -26,7 +26,7 @@ I decided to use React to be able to benefit from the dynamic side that this lib
     - Everybody can login/register
     - Everybody can see restaurants around him
     - Everybody can search restaurants in a place where he tells
-    - User can order food. (Food is generated randomly. The most important of this part is the input    validation for different field and get the delivery time)
+    - User can order food. (Food is generated randomly. The most important of this part is the input   validation for different field and get the delivery time)
     - User can see his orders history
     - User can modify his personal information
     - User can delete his account
