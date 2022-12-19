@@ -27,7 +27,7 @@ const SidebarSettings = (
 
 
     return (
-        <div className="flex h-screen w-16 flex-col justify-between border-r bg-white">
+        <div className="flex h-screen w-16 z-10 flex-col justify-between border-r bg-white">
   <div>
     <div className="inline-flex h-16 w-16 items-center justify-center">
     <Avatar alt="User settings" rounded={true} />

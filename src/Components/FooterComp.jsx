@@ -25,13 +25,13 @@ const FooterComp = () => {
               </h2>
               <ul className="text-gray-400">
                 <li className="mb-4">
-                  <NavLink to="https://flowbite.com/" className="hover:underline">
+                  <NavLink rel="external" to="https://flowbite.com" className="hover:underline">
                     Flowbite
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    to="https://tailwindcss.com/"
+                    to="tailwindcss.com"
                     className="hover:underline"
                   >
                     Tailwind CSS

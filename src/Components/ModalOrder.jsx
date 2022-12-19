@@ -1,12 +1,36 @@
 import React, {useEffect, useState}from "react";
 import axios  from 'axios';
+import Alert from '@mui/material/Alert';
 
 axios.defaults.baseURL='http://localhost:3333';
 axios.defaults.withCredentials = true
 
 const ModalOrder = ({ CloseModal , isClicked}) => {
+  const [order, setOrder] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    postal_code: "",
+    country: "",
+    card_number: "",
+    card_expiration_date: "",
+    card_cvc: "",
+  })
   const [Meal, setMeal] = useState(null)
   const [Extra, setExtra] = useState(null)
+  const [paymentError, setPaymentError] = useState(false)
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios.post('/order', order)
+    .then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+      setPaymentError(error.message)
+    })
+  }
 
 
 useEffect(() => {
@@ -18,7 +42,7 @@ useEffect(() => {
   });
 }, []);
 
-  console.log(isClicked);
+  console.log(order);
   return (
     <div>
       <div
@@ -165,7 +189,15 @@ useEffect(() => {
                         </div>
 
                         <div className="bg-white py-12 md:py-24">
+   
                           <div className="mx-auto max-w-lg px-4 lg:px-8">
+                          {paymentError && 
+                            <div className="">
+                                <Alert severity="error">
+                                  {paymentError}
+                                </Alert>
+                            </div>
+                              }
                             <form className="grid grid-cols-6 gap-4">
                               <div className="col-span-3">
                                 <label
@@ -179,6 +211,7 @@ useEffect(() => {
                                   className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
                                   type="text"
                                   id="first_name"
+                                  onChange={(e) => setOrder({ ...order, first_name: e.target.value })}
                                 />
                               </div>
 
@@ -194,6 +227,7 @@ useEffect(() => {
                                   className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
                                   type="text"
                                   id="last_name"
+                                  onChange={(e) => setOrder({ ...order, last_name: e.target.value })}
                                 />
                               </div>
 
@@ -209,6 +243,7 @@ useEffect(() => {
                                   className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
                                   type="email"
                                   id="email"
+                                  onChange={(e) => setOrder({ ...order, email: e.target.value })}
                                 />
                               </div>
 
@@ -224,6 +259,7 @@ useEffect(() => {
                                   className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
                                   type="tel"
                                   id="phone"
+                                  onChange={(e) => setOrder({ ...order, phone: e.target.value })}
                                 />
                               </div>
 
@@ -247,6 +283,7 @@ useEffect(() => {
                                       name="card-number"
                                       id="card-number"
                                       placeholder="Card number"
+                                      onChange={(e) => setOrder({ ...order, card_number: e.target.value })}
                                     />
                                   </div>
 
@@ -265,6 +302,7 @@ useEffect(() => {
                                         name="card-expiration-date"
                                         id="card-expiration-date"
                                         placeholder="MM / YY"
+                                        onChange={(e) => setOrder({ ...order, card_expiration_date: e.target.value })}
                                       />
                                     </div>
 
@@ -279,6 +317,7 @@ useEffect(() => {
                                         name="card-cvc"
                                         id="card-cvc"
                                         placeholder="CVC"
+                                        onChange={(e) => setOrder({ ...order, card_cvc: e.target.value })}
                                       />
                                     </div>
                                   </div>
@@ -301,6 +340,7 @@ useEffect(() => {
                                       id="country"
                                       name="country"
                                       autocomplete="country-name"
+                                      onChange={(e) => setOrder({ ...order, country: e.target.value })}
                                     >
                                       <option>England</option>
                                       <option>Wales</option>
@@ -326,6 +366,7 @@ useEffect(() => {
                                       id="postal-code"
                                       autocomplete="postal-code"
                                       placeholder="ZIP/Post Code"
+                                      onChange={(e) => setOrder({ ...order, postal_code: e.target.value })}
                                     />
                                   </div>
                                 </div>
@@ -335,6 +376,7 @@ useEffect(() => {
                                 <button
                                   className="block w-full rounded-lg bg-black p-2.5 text-sm text-white"
                                   type="submit"
+                                  onClick={handleSubmit}
                                 >
                                   Pay Now
                                 </button>
